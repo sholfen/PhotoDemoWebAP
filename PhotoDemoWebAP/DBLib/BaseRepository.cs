@@ -5,12 +5,10 @@ namespace PhotoDemoWebAP.DBLib
 {
     public class BaseRepository<T>
     {
-        //protected SqliteConnection _sqlConnection { get; set; }
         protected SqlConnection _sqlConnection { get; set; }
 
         public BaseRepository(string connectionString)
         {
-            //_sqlConnection = new SqliteConnection(connectionString);
             _sqlConnection = new SqlConnection(connectionString);
         }
 

@@ -1,9 +1,13 @@
+using Microsoft.Extensions.Configuration;
+using PhotoDemoWebAP.DBLib;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 var app = builder.Build();
+
+DBTools.ConnectionString= builder.Configuration.GetConnectionString("Localdb");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
