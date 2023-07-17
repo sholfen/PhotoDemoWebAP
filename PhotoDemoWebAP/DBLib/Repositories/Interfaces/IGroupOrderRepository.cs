@@ -4,6 +4,6 @@ namespace PhotoDemoWebAP.DBLib.Repositories.Interfaces
 {
     public interface IGroupOrderRepository : IBaseRepository<GroupOrder>
     {
-
+        void Update(GroupOrder groupOrder);
     }
 }

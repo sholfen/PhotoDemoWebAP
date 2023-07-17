@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using PhotoDemoWebAP.DBLib;
+using PhotoDemoWebAP.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 DBTools.ConnectionString= builder.Configuration.GetConnectionString("Localdb");
+CacheManager.PullProductDataInCache();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

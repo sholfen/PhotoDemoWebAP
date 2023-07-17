@@ -1,13 +1,12 @@
-﻿namespace PhotoDemoWebAP.DBLib.Models
+﻿using PhotoDemoWebAP.DBLib.Models;
+
+namespace PhotoDemoWebAP.Models
 {
-    public class BundleProduct
+    public class BundleProductModel
     {
-        /// <summary>
-        /// GUID
-        /// </summary>
         public string BundleId { get; set; } = string.Empty;
         public string BundleTitle { get; set; } = string.Empty;
         public string BundleDescription { get; set; } = string.Empty;
-        public string[] ProductIdList { get; set; } = new string[0];
+        public Product[] ProductList { get; set; } = new Product[0];
     }
 }
