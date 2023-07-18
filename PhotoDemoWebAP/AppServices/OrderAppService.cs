@@ -17,6 +17,7 @@ namespace PhotoDemoWebAP.AppServices
             _groupOrderRepository = groupOrderRepository;
         }
 
+        [ExceptionLogging]
         public void AddGroupOrder(GroupOrderModel groupOrderModel)
         {
             List<Product> products = new List<Product>();
@@ -47,6 +48,7 @@ namespace PhotoDemoWebAP.AppServices
             _groupOrderRepository.Insert(groupOrder);
         }
 
+        [ExceptionLogging]
         public List<GroupOrderModel> ListGroupOrder()
         {
             List<GroupOrderModel> groupOrderModels = new List<GroupOrderModel>();
@@ -80,6 +82,7 @@ namespace PhotoDemoWebAP.AppServices
             return groupOrderModels;
         }
 
+        [ExceptionLogging]
         public GroupOrderModel GetGroupOrderModel(string groupOrderId)
         {
             Dictionary<string, object> param = new Dictionary<string, object>();
@@ -99,6 +102,7 @@ namespace PhotoDemoWebAP.AppServices
             return groupOrderModel;
         }
 
+        [ExceptionLogging]
         public void CancelGroupOrder(string groupOrderId)
         {
             Dictionary<string, object> whereParam = new Dictionary<string, object>();
@@ -111,6 +115,7 @@ namespace PhotoDemoWebAP.AppServices
             }
         }
 
+        [ExceptionLogging]
         public void UpdateOrderOfGroupOrder(string groupOrderId, string[] orderIdList)
         {
             Dictionary<string, object> whereParam = new Dictionary<string, object>();
@@ -123,6 +128,7 @@ namespace PhotoDemoWebAP.AppServices
             }
         }
 
+        [ExceptionLogging]
         public void UpdateUserData(string groupOrderId, string name, string email)
         {
             _groupOrderRepository.UpdateUserData(groupOrderId, name, email);
