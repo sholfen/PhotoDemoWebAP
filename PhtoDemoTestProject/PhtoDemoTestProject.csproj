@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoDemoWebAP\PhotoDemoWebAP.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -8,6 +8,6 @@
         public string BundleId { get; set; } = string.Empty;
         public string BundleTitle { get; set; } = string.Empty;
         public string BundleDescription { get; set; } = string.Empty;
-        public string[] ProductIdList { get; set; } = new string[0];
+        public string ProductIdList { get; set; } = string.Empty;
     }
 }
