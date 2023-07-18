@@ -1,0 +1,46 @@
+﻿@model IEnumerable<PhotoDemoWebAP.Models.GroupOrderModel>
+
+@{
+    ViewData["Title"] = "訂單瀏覽";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductNameList)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductNameList)
+            </td>
+            <td>
+                    @Html.ActionLink("刪除", "DeleteOrder", new {  GroupOrderId = item.GroupOrderId  }) | @Html.ActionLink("編輯", "EditOrder", new {  GroupOrderId = item.GroupOrderId  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

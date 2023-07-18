@@ -2,6 +2,7 @@
 using PhotoDemoWebAP.DBLib.Repositories.Interfaces;
 using PhotoDemoWebAP.Models;
 using PhotoDemoWebAP.Utilities;
+using PhotoDemoWebAP.Utilities.AOP;
 
 namespace PhotoDemoWebAP.AppServices
 {
@@ -19,12 +20,14 @@ namespace PhotoDemoWebAP.AppServices
         public void AddGroupOrder(GroupOrderModel groupOrderModel)
         {
             List<Product> products = new List<Product>();
+            List<string> productOrderIdList = new List<string>();
             foreach (string productId in groupOrderModel.ProductIdList)
             {
                 string orderId = Guid.NewGuid().ToString();
                 var product = CacheManager.Products[productId];
                 products.Add(product);
-                Order order = new Order
+                productOrderIdList.Add(orderId);
+                ProductOrder order = new ProductOrder
                 {
                     OrderId = orderId,
                     ProductId = productId,
@@ -40,8 +43,60 @@ namespace PhotoDemoWebAP.AppServices
             groupOrder.UserEmail = groupOrderModel.UserEmail;
             int totalPrice = Tools.PriceCalculator(products);
             groupOrder.TotalPrice = totalPrice;
-            groupOrder.OrderIdList = string.Join(',', groupOrderModel.ProductIdList);
+            groupOrder.OrderIdList = string.Join(',', productOrderIdList);
             _groupOrderRepository.Insert(groupOrder);
+        }
+
+        public List<GroupOrderModel> ListGroupOrder()
+        {
+            List<GroupOrderModel> groupOrderModels = new List<GroupOrderModel>();
+            Dictionary<string, object> param = new Dictionary<string, object>();
+            param.Add("Cancelled", 0);
+            var groupOrders = _groupOrderRepository.QueryBy(param);
+            foreach (var groupOrder in groupOrders)
+            {
+                List<Product> productList = new List<Product>();
+                foreach (var orderId in groupOrder.OrderIdList.Split(','))
+                {
+                    string newOrderId = orderId.Trim();
+                    param = new Dictionary<string, object>();
+                    param["OrderId"] = newOrderId;
+                    var productOrder = _orderRepository.QueryBy(param).FirstOrDefault();
+                    productList.Add(CacheManager.Products[productOrder.ProductId]);
+                }
+                GroupOrderModel groupOrderModel = new GroupOrderModel
+                {
+                    BundleId = groupOrder.BundleId,
+                    Cancelled = groupOrder.Cancelled,
+                    GroupOrderId = groupOrder.GroupOrderId,
+                    TotalPrice = groupOrder.TotalPrice,
+                    UserEmail = groupOrder.UserEmail,
+                    UserName = groupOrder.UserName,
+                    ProductNameList = string.Join(',', productList.Select(p => p.Name).ToList()),
+                };
+                groupOrderModels.Add(groupOrderModel);
+            }
+
+            return groupOrderModels;
+        }
+
+        public GroupOrderModel GetGroupOrderModel(string groupOrderId)
+        {
+            Dictionary<string, object> param = new Dictionary<string, object>();
+            param.Add("GroupOrderId", groupOrderId);
+            GroupOrder groupOrder = _groupOrderRepository.QueryBy(param).FirstOrDefault();
+            GroupOrderModel groupOrderModel = new GroupOrderModel
+            {
+                BundleId = groupOrder.BundleId,
+                Cancelled = groupOrder.Cancelled,
+                GroupOrderId = groupOrder.GroupOrderId,
+                ProductIdList = new string[0],
+                ProductNameList = string.Empty,
+                TotalPrice = groupOrder.TotalPrice,
+                UserEmail = groupOrder.UserEmail,
+                UserName = groupOrder.UserName,
+            };
+            return groupOrderModel;
         }
 
         public void CancelGroupOrder(string groupOrderId)
@@ -66,6 +121,11 @@ namespace PhotoDemoWebAP.AppServices
                 groupOrder.OrderIdList = string.Join(",", orderIdList);
                 _groupOrderRepository.Update(groupOrder);
             }
+        }
+
+        public void UpdateUserData(string groupOrderId, string name, string email)
+        {
+            _groupOrderRepository.UpdateUserData(groupOrderId, name, email);
         }
     }
 }

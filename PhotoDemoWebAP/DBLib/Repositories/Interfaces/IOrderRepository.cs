@@ -2,7 +2,7 @@
 
 namespace PhotoDemoWebAP.DBLib.Repositories.Interfaces
 {
-    public interface IOrderRepository: IBaseRepository<Order>
+    public interface IOrderRepository: IBaseRepository<ProductOrder>
     {
 
     }

@@ -20,5 +20,18 @@ namespace PhotoDemoWebAP.DBLib.Repositories.Implements
                 new { OrderIdList = groupOrder.OrderIdList, TotalPrice = groupOrder.TotalPrice, Cancelled = groupOrder.Cancelled, 
                     GroupOrderId = groupOrder.GroupOrderId });
         }
+
+        public void UpdateUserData(string groupOrderId, string name, string email)
+        {
+            string query =
+                $"UPDATE GroupOrder SET UserName = @UserName, UserEmail = @Email WHERE GroupOrderId = @GroupOrderId;";
+            _sqlConnection.Execute(query,
+                new
+                {
+                    UserName = name,
+                    Email = email,
+                    GroupOrderId = groupOrderId
+                });
+        }
     }
 }

@@ -1,0 +1,54 @@
+﻿@model PhotoDemoWebAP.Models.BundleProductModel
+
+@{
+    ViewData["Title"] = "新刊預購";
+}
+
+<div>
+    <h4>新刊預購</h4>
+    <hr />
+    <img src="~/pic/01308-402764903.png" width="600" />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BundleTitle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BundleTitle)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.BundleDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.BundleDescription)
+        </dd>
+        <dd class = "col-sm-10">
+            <form action="/Home/PreOrder" method="post">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>名稱</th>
+                            <th>說明</th>
+                            <th>價錢</th>
+                            <th>是否預購</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model.ProductList)
+                        {
+                            <tr>
+                                <td>@product.Name</td>
+                                <td>@product.Description</td>
+                                <td>@product.Price</td>
+                                <td><input type="checkbox" id="@product.ProductId" name="productList" value="@product.ProductId"></td>
+                            </tr>                        
+                        }
+                    </tbody>
+                </table>
+                <span>姓名</span><input name="Name" type="text" /><br />
+                <span>Email</span><input name="Email" type="text" /><br />
+                <input type="submit" value="提交">
+            </form>
+        </dd>
+    </dl>
+</div>
+

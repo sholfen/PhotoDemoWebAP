@@ -1,6 +1,6 @@
 ﻿namespace PhotoDemoWebAP.DBLib.Models
 {
-    public class Order
+    public class ProductOrder
     {
         /// <summary>
         /// GUID
