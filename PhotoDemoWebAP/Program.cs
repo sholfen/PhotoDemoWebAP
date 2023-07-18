@@ -1,8 +1,14 @@
 using Microsoft.Extensions.Configuration;
+using NLog;
+using NLog.Extensions.Logging;
+using NLog.Web;
 using PhotoDemoWebAP.DBLib;
 using PhotoDemoWebAP.Utilities;
 
+var logger = LogManager.GetCurrentClassLogger();
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

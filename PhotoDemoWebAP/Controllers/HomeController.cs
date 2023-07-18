@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NLog;
+using NLog.Web;
 using PhotoDemoWebAP.Models;
 using System.Diagnostics;
 
@@ -6,15 +8,16 @@ namespace PhotoDemoWebAP.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly NLog.ILogger _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController()
         {
-            _logger = logger;
+            _logger = LogManager.Setup().GetLogger("GroupBuyDemo");
         }
 
         public IActionResult Index()
         {
+            _logger.Info("Home: Test Info");
             return View();
         }
 
