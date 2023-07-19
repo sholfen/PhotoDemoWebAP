@@ -20,6 +20,11 @@ namespace PhotoDemoWebAP.AppServices
         [ExceptionLogging]
         public void AddGroupOrder(GroupOrderModel groupOrderModel)
         {
+            if (groupOrderModel.ProductIdList.Count() == 0)
+            {
+                return;
+            }
+
             List<Product> products = new List<Product>();
             List<string> productOrderIdList = new List<string>();
             foreach (string productId in groupOrderModel.ProductIdList)

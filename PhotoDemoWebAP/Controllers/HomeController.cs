@@ -53,7 +53,7 @@ namespace PhotoDemoWebAP.Controllers
                 UserName = name,
             };
             _orderAppService.AddGroupOrder(groupOrderModel);
-            return RedirectToAction("Index");
+            return RedirectToAction("OrderList");
         }
 
         [HttpGet]
